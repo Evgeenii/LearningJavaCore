@@ -25,8 +25,6 @@ public class Lesson {
 
         System.out.println(stringRepeat);
 
-        test
-
 
 
 
