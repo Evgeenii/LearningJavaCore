@@ -153,7 +153,7 @@ public class Lesson {
 
         else if (textChars.length > 7) {
             for (int i = 2; i < textChars.length - 4 && textChars[i] != ' ' ; i++) {
-                if (textChars[i] != ' ')
+                if (textChars[i] == textChars[i])
                     textChars[i] = '*';
 
             }
