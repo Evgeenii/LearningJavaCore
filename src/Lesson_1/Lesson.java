@@ -1,7 +1,6 @@
 package Lesson_1;
 
 
-import java.io.PrintStream;
 import java.util.Arrays;
 
 public class Lesson {
@@ -66,7 +65,7 @@ public class Lesson {
 
         int a = 3;
         int b = 5;
-        int sum = 8;
+        int sum = a + b;
         System.out.println((int) Math.pow(sum, 2) + "\n");
 
 
@@ -107,13 +106,9 @@ public class Lesson {
 
         String helloWorld = "Hello world";
         String newHelloWorld = helloWorld.replace("l", "r");
-        System.out.println(newHelloWorld.toUpperCase());
+        System.out.println(newHelloWorld.toUpperCase() + "\n");
 
         // не понял, что такое - "выбрать первые 8 символов"
-
-
-
-
 
         //Экспертный уровень
         //Задача №1
@@ -133,6 +128,43 @@ public class Lesson {
         //Используемые технологии: String.find, String.replaceAll, String.split, String.join, String.contains, String.substring
         //Регулярные выражения, класс StringBuilder
 
+        String number = "89005005512";
+        String mail = "papa.jones@yandex.ru";
+        String initials = "Глебович Глеб Глебов";
+        String sampleText = "Text";
 
+        System.out.println(hideData(number));
+        System.out.println(hideMail(mail));
+        System.out.println(hideData(initials));
+        System.out.println(hideData(sampleText));
+
+    }
+    public static String hideData(String anyText) {
+        char[] textChars = anyText.toCharArray();
+
+        if (textChars.length < 7) {
+            for (int i = 1; i < textChars.length - 1 ; i++) {
+                if (textChars[i] == textChars[i])
+                    textChars[i] = '*';
+
+            }
+            return new String(textChars);
+        }
+
+        else if (textChars.length > 7) {
+            for (int i = 2; i < textChars.length - 4 && textChars[i] != ' ' ; i++) {
+                if (textChars[i] != ' ')
+                    textChars[i] = '*';
+
+            }
+            return new String(textChars);
+        }
+        return anyText;
+    }
+
+    //сделал отдельный метод для проверки только е-мэйла
+
+    public static String hideMail(String anyText) {
+        return anyText.replaceAll("(?<=.{3}).(?=[^@]*?@)", "*");
     }
 }
