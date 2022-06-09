@@ -92,7 +92,9 @@ public class Lesson {
         System.arraycopy(nums2, 0, numsFusion, nums1.length, nums2.length);
         System.arraycopy(numsFusion, 0, numsFusion, 0, numsFusion.length);
 
-        for (int i = 0; i < nums1.length; i++) numsMultiplied[i] = nums1[i] * nums2[i];
+        for (int i = 0; i < nums1.length; i++)
+            numsMultiplied[i] = nums1[i] * nums2[i];
+
 
         System.arraycopy(numsFusion, 0, numsResult, 0, numsFusion.length);
         System.arraycopy(numsMultiplied, 0, numsResult, numsFusion.length, numsMultiplied.length);
@@ -128,43 +130,56 @@ public class Lesson {
         //Используемые технологии: String.find, String.replaceAll, String.split, String.join, String.contains, String.substring
         //Регулярные выражения, класс StringBuilder
 
-        String number = "89005005512";
-        String mail = "papa.jones@yandex.ru";
-        String initials = "Глебович Глеб Глебов";
-        String sampleText = "Text";
 
-        System.out.println(hideData(number));
-        System.out.println(hideMail(mail));
-        System.out.println(hideData(initials));
-        System.out.println(hideData(sampleText));
+        String dataText = "<client>(Какие то данные)<data>79991113344;test@yandex.ru;Иванов Иван Иванович</data></client>";
+        hideData(dataText);
 
     }
+
+
     public static String hideData(String anyText) {
-        char[] textChars = anyText.toCharArray();
+        String openTag = "<data>";
+        String closedTag = "</data>";
+        int dataStartIndex = anyText.indexOf(openTag) + openTag.length();
+        int dataEndIndex = anyText.indexOf(closedTag);
+        String personalData = anyText.substring(dataStartIndex, dataEndIndex);
+        String hiddenMail = " ";
+        String hiddenNumber = " ";
+        String hiddenName = " ";
 
-        if (textChars.length < 7) {
-            for (int i = 1; i < textChars.length - 1 ; i++) {
-                if (textChars[i] == textChars[i])
-                    textChars[i] = '*';
+        for (String field : personalData.split(";")) {
+            if (field.contains("@")) {
+                int emailSymbolIndex = field.indexOf("@") + 1;
+                int dotIndex = field.indexOf(".");
+                String domain = field.substring(emailSymbolIndex, dotIndex);
+                String userNameMasked = field.substring(0, emailSymbolIndex - 2) + "*";
+                hiddenMail = userNameMasked + "@" + "*".repeat(domain.length()) + field.substring(dotIndex) + " ";
+            } else if (field.contains("7")) {
+                int prefixIndex = field.indexOf(field.length()) + 1;
+                int numberBodyIndex = field.indexOf(field.length()) + 5;
+                String prefix = field.substring(prefixIndex, numberBodyIndex);
+                String bodyMasked = field.substring(4, numberBodyIndex) + "*".repeat(3);
+                String tail = field.substring(7);
+                hiddenNumber = prefix + bodyMasked + tail + " ";
 
+            } else {
+                String[] initial = field.split(" ");
+                String surname = initial[0];
+                String name = initial[1];
+                String secondName = initial[2];
+                String surnameNameMasked = surname.charAt(0)
+                        + "*".repeat(surname.length() - 1)
+                        + surname.charAt(surname.length() - 1) + " ";
+                String secondNameMasked = " " + secondName.charAt(0) + "." + " ";
+                hiddenName = surnameNameMasked + name + secondNameMasked;
             }
-            return new String(textChars);
         }
 
-        else if (textChars.length > 7) {
-            for (int i = 2; i < textChars.length - 4 && textChars[i] != ' ' ; i++) {
-                if (textChars[i] == textChars[i])
-                    textChars[i] = '*';
+        String hiddenData = hiddenMail + hiddenNumber + hiddenName;
+        String replacement = personalData.replaceAll(personalData, hiddenData);
+        String toBeReplaced = anyText.substring(dataStartIndex, dataEndIndex);
 
-            }
-            return new String(textChars);
-        }
-        return anyText;
-    }
-
-    //сделал отдельный метод для проверки только е-мэйла
-
-    public static String hideMail(String anyText) {
-        return anyText.replaceAll("(?<=.{3}).(?=[^@]*?@)", "*");
+        return anyText.replace(toBeReplaced, replacement);
     }
 }
+
