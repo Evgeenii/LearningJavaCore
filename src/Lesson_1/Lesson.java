@@ -1,6 +1,5 @@
 package Lesson_1;
 
-
 import java.util.Arrays;
 
 public class Lesson {
@@ -143,9 +142,11 @@ public class Lesson {
         int dataStartIndex = anyText.indexOf(openTag) + openTag.length();
         int dataEndIndex = anyText.indexOf(closedTag);
         String personalData = anyText.substring(dataStartIndex, dataEndIndex);
+
         String hiddenMail = " ";
         String hiddenNumber = " ";
         String hiddenName = " ";
+
 
         for (String field : personalData.split(";")) {
             if (field.contains("@")) {
@@ -153,15 +154,14 @@ public class Lesson {
                 int dotIndex = field.indexOf(".");
                 String domain = field.substring(emailSymbolIndex, dotIndex);
                 String userNameMasked = field.substring(0, emailSymbolIndex - 2) + "*";
-                hiddenMail = userNameMasked + "@" + "*".repeat(domain.length()) + field.substring(dotIndex) + " ";
+                hiddenMail = userNameMasked + "@" + "*".repeat(domain.length()) + field.substring(dotIndex) + ";";
             } else if (field.contains("7")) {
                 int prefixIndex = field.indexOf(field.length()) + 1;
                 int numberBodyIndex = field.indexOf(field.length()) + 5;
                 String prefix = field.substring(prefixIndex, numberBodyIndex);
                 String bodyMasked = field.substring(4, numberBodyIndex) + "*".repeat(3);
                 String tail = field.substring(7);
-                hiddenNumber = prefix + bodyMasked + tail + " ";
-
+                hiddenNumber = prefix + bodyMasked + tail + ";";
             } else {
                 String[] initial = field.split(" ");
                 String surname = initial[0];
@@ -170,16 +170,19 @@ public class Lesson {
                 String surnameNameMasked = surname.charAt(0)
                         + "*".repeat(surname.length() - 1)
                         + surname.charAt(surname.length() - 1) + " ";
-                String secondNameMasked = " " + secondName.charAt(0) + "." + " ";
+                String secondNameMasked = " " + secondName.charAt(0) + ".";
                 hiddenName = surnameNameMasked + name + secondNameMasked;
             }
         }
 
         String hiddenData = hiddenMail + hiddenNumber + hiddenName;
-        String replacement = personalData.replaceAll(personalData, hiddenData);
-        String toBeReplaced = anyText.substring(dataStartIndex, dataEndIndex);
 
-        return anyText.replace(toBeReplaced, replacement);
+        StringBuilder masker = new StringBuilder(anyText);
+        masker.replace(dataStartIndex, dataEndIndex, hiddenData);
+        String dataMasked = masker.toString();
+        System.out.println(dataMasked);
+
+        return dataMasked;
     }
 }
 
