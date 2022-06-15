@@ -142,12 +142,9 @@ public class Lesson {
         int dataStartIndex = anyText.indexOf(openTag) + openTag.length();
         int dataEndIndex = anyText.indexOf(closedTag);
         String personalData = anyText.substring(dataStartIndex, dataEndIndex);
-
         String hiddenMail = " ";
         String hiddenNumber = " ";
         String hiddenName = " ";
-
-
         for (String field : personalData.split(";")) {
             if (field.contains("@")) {
                 int emailSymbolIndex = field.indexOf("@") + 1;
