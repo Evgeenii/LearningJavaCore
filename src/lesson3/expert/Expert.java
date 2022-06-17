@@ -51,23 +51,16 @@ public class Expert {
 
     }
 
-    public static Map<Integer, Integer> returnTopRegionsSortedMap(Map<Integer, Integer> inputData) {
+    public static TreeMap<Integer, Integer> returnTopRegionsSortedMap(Map<Integer, Integer> inputData) {
 
-        // Неудачная попытка посчитать топ регионов с номерами
+        //  У̶д̶а̶ч̶н̶а̶я̶ попытка посчитать топ регионов с номерами
 
-        Map<Integer, Integer> sortedMap = new LinkedHashMap<>();
-        ArrayList<Integer> list = new ArrayList<>();
+        TreeMap<Integer, Integer> sortedMap = new TreeMap<>();
         for (var pair : inputData.entrySet()) {
-            Integer region = pair.getKey();
-            list.add(pair.getValue());
-            Collections.sort(list);
-            for (Integer numSorted : list) {
-                for (Map.Entry<Integer, Integer> numMap : inputData.entrySet())
-                    sortedMap.put(region, numSorted);
-
-            }
+            Integer key = pair.getKey();
+            Integer value = pair.getValue();
+            sortedMap.put(value, key);
         }
-        System.out.println(sortedMap);
         return sortedMap;
     }
 
