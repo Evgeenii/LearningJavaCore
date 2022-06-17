@@ -63,7 +63,7 @@ public class Hard {
 
         if (!hasFuel || (hasMotorProblem || hasElectricsProblem || hasTransmissionProblem || hasWheelsProblem)) {
             if (!hasFuel && (hasMotorProblem || hasElectricsProblem || hasTransmissionProblem || hasWheelsProblem)) {
-                System.out.println("У вас нет бензина. И кажется, что есть какие-то проблемы. Консультация бесплатно.");
+                System.out.println("У вас нет бензина. И мы обнаружили неисправность. Консультация бесплатно.");
             } else if (!hasFuel && !(hasMotorProblem && hasElectricsProblem && hasTransmissionProblem && hasWheelsProblem)) {
                 price = 1000;
                 resultPrice = resultPrice + price;
