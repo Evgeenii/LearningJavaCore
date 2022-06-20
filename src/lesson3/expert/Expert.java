@@ -51,17 +51,24 @@ public class Expert {
 
     }
 
-    public static TreeMap<Integer, Integer> returnTopRegionsSortedMap(Map<Integer, Integer> inputData) {
+    public static ArrayList<Integer> returnTopRegionsSortedMap(Map<Integer, Integer> inputData) {
 
-        //  У̶д̶а̶ч̶н̶а̶я̶ попытка посчитать топ регионов с номерами
+        // Неудачная попытка посчитать топ регионов с номерами
 
-        TreeMap<Integer, Integer> sortedMap = new TreeMap<>();
-        for (var pair : inputData.entrySet()) {
+        ArrayList<Integer> topCountList = new ArrayList<>();
+        ArrayList<Integer> topRegionList = new ArrayList<>();
+
+        for (var pair: inputData.entrySet()) {
             Integer key = pair.getKey();
             Integer value = pair.getValue();
-            sortedMap.put(value, key);
+            topCountList.add(value);
+            topCountList.sort(Collections.reverseOrder());
+            topRegionList.add(key);
         }
-        return sortedMap;
+
+        System.out.println(topRegionList);
+        System.out.println(topCountList);
+        return null;
     }
 
 
