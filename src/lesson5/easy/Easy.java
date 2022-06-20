@@ -58,12 +58,7 @@ public class Easy {
         System.out.println();
 
         //Задача №3
-
-        // 1. Создать класс Financial record, с двумя атрибутами: incomes, outcomes (доходы, расходы)
-        // 2. Создать в этом классе геттеры, сеттеры и конструктор на все атрибуты
-        // 3. Создать объект этого класса прямо здесь (class Homework3, метод main), с доходами 500, расходами 300
-        // 4. Записать в файл "report.txt" данные из объекта класса.
-        // Ожидаемый результат: в файле report.txt - одна строка: доходы = 500, расходы 300
+        
 
         FinancialRecord record1 = new FinancialRecord(500, 300);
         FileWriter fileWriter2 = new FileWriter("src/lesson5/resource/report.txt");
