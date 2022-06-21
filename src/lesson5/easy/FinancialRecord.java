@@ -1,27 +1,29 @@
 package lesson5.easy;
 
 public class FinancialRecord {
-    private int incomes;
-    private int outcomes;
 
-    public FinancialRecord(int incomes, int outcomes) {
+    private double incomes;
+    private double outcomes;
+
+    public FinancialRecord(double incomes, double outcomes) {
         this.incomes = incomes;
         this.outcomes = outcomes;
+
     }
 
-    public int getIncomes() {
+    public double getIncomes() {
         return incomes;
     }
 
-    public void setIncomes(int incomes) {
+    public void setIncomes(double incomes) {
         this.incomes = incomes;
     }
 
-    public int getOutcomes() {
+    public double getOutcomes() {
         return outcomes;
     }
 
-    public void setOutcomes(int outcomes) {
+    public void setOutcomes(double outcomes) {
         this.outcomes = outcomes;
     }
 }

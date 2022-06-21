@@ -39,15 +39,18 @@ public class Easy {
 
         //Задача №1
 
-        Car.start();
-        Car.lightsOn();
-        Lada.breakingDown();
-        Toyota.playMusic();
+        Lada lada = new Lada();
+        Toyota toyota = new Toyota();
+
+        toyota.start();
+        lada.lightsOn();
+        lada.breakingDown();
+        toyota.playMusic();
         System.out.println();
 
         //Задача №2
 
-        Path path = Path.of("src/lesson5/resource/my_first_file.txt");
+        Path path = Path.of("resource/my_first_file.txt");
         String list = Files.readString(path);
         StringBuilder stringBuilder = new StringBuilder(list);
         int newLineIndex = stringBuilder.indexOf("\n");
@@ -58,10 +61,9 @@ public class Easy {
         System.out.println();
 
         //Задача №3
-        
 
         FinancialRecord record1 = new FinancialRecord(500, 300);
-        FileWriter fileWriter2 = new FileWriter("src/lesson5/resource/report.txt");
+        FileWriter fileWriter2 = new FileWriter("resource/report.txt");
 
         StringBuilder builder = new StringBuilder();
         builder.append("доходы = ");
