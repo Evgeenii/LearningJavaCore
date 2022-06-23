@@ -9,6 +9,8 @@ import java.util.*;
 
 public class Report {
 
+    //переписать все нормально
+
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private static final String SHOP = "pyterochka";
 
@@ -16,30 +18,58 @@ public class Report {
     public static void doReport() throws IOException {
         List<String> dataFromFiles = getData();
         Map<Integer, String> report = getReport(dataFromFiles);
-        printReport(report);
+        Map<String, Double> reportTask2 = getReportTask2(dataFromFiles);
+        printReport(report, reportTask2);
+
     }
 
-    private static void printReport(Map<Integer, String> fromReportDataMap) {
+    private static void printReport(Map<Integer, String> report1, Map<String, Double> report2) {
         System.out.println( "Прибыль по магазину " + SHOP + " по месяцам ");
-
-        for (Map.Entry<Integer, String> entry : fromReportDataMap.entrySet()) {
+        for (Map.Entry<Integer, String> entry : report1.entrySet()) {
             String[] dataArray = entry.getValue().split("\\.");
             String profitPerMonth = entry.getValue();
             System.out.println(profitPerMonth);
         }
+
+        System.out.println();
+
+        for (Map.Entry<String, Double> entry : report2.entrySet()) {
+            String shop = entry.getKey();
+            Double outcomes = entry.getValue();
+            System.out.println("Расходы " + shop + " за весь период: "
+                    + df.format(outcomes));
+        }
+    }
+
+    private static Map<String, Double> getReportTask2(List<String> dataFromFiles) {
+        Map<String, Double> report2 = new HashMap<>();
+        for (var strings : dataFromFiles) {
+            String[] rawData = strings.split("\n");
+            for (String data : rawData) {
+                if (!data.equals("магазин;доход;расход;дата") && !data.isEmpty()) {
+                    String[] splitedData = data.split(";");
+                    String shop = splitedData[0];
+                    double outcomes = Double.parseDouble(splitedData[2]);
+                    if (report2.get(shop) == null) {
+                        report2.put(shop, outcomes);
+                    } else {
+                        report2.replace(shop, report2.get(shop) + outcomes);
+                    }
+                }
+            }
+        }
+
+        return report2;
     }
 
     private static Map<Integer, String> getReport(List<String> dataFromFiles) {
         Map<Integer, String> report = new HashMap<>();
-
         for (var strings : dataFromFiles) {
             String[] splitedData = strings.split("\n");
             double profit = 0;
-
             for (String dataString : splitedData) {
                 if (dataString.contains(SHOP)) {
                     String[] currentShop = dataString.split(";");
-                    String shop = currentShop[0];
                     String incomes = currentShop[1];
                     String outcomes = currentShop[2];
                     String date = currentShop[3];
@@ -64,11 +94,8 @@ public class Report {
                                 .append(df.format(profit));
                         report.put(month, profitPerMonth.toString());
                     }
-
                 }
-
             }
-
         }
         return report;
     }
