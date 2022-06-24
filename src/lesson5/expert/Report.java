@@ -1,30 +1,29 @@
 package lesson5.expert;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class Report {
 
-    //переписать все нормально
+public class Report {
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private static final String SHOP = "pyterochka";
 
-
     public static void doReport() throws IOException {
-        List<String> dataFromFiles = getData();
-        Map<Integer, String> report = getReport(dataFromFiles);
-        Map<String, Double> reportTask2 = getReportTask2(dataFromFiles);
+        List<String> filesPathList = getFileNames();
+        List<String> rawDataList = getRawDataList(filesPathList);
+        Map<Integer, String> report = getReport(rawDataList);
+        Map<String, Double> reportTask2 = getReportTask2(rawDataList);
         printReport(report, reportTask2);
 
     }
 
     private static void printReport(Map<Integer, String> report1, Map<String, Double> report2) {
-        System.out.println( "Прибыль по магазину " + SHOP + " по месяцам ");
+        System.out.println("Прибыль по магазину " + SHOP + " по месяцам ");
+
         for (Map.Entry<Integer, String> entry : report1.entrySet()) {
             String[] dataArray = entry.getValue().split("\\.");
             String profitPerMonth = entry.getValue();
@@ -43,34 +42,26 @@ public class Report {
 
     private static Map<String, Double> getReportTask2(List<String> dataFromFiles) {
         Map<String, Double> report2 = new HashMap<>();
-        for (var strings : dataFromFiles) {
-            String[] rawData = strings.split("\n");
-            for (String data : rawData) {
-                if (!data.equals("магазин;доход;расход;дата") && !data.isEmpty()) {
-                    String[] splitedData = data.split(";");
-                    String shop = splitedData[0];
-                    double outcomes = Double.parseDouble(splitedData[2]);
-                    if (report2.get(shop) == null) {
-                        report2.put(shop, outcomes);
-                    } else {
-                        report2.replace(shop, report2.get(shop) + outcomes);
-                    }
-                }
+        for (String strings : dataFromFiles) {
+            String[] splitedData = strings.split(";");
+            String shop = splitedData[0];
+            double outcomes = Double.parseDouble(splitedData[2]);
+            if (report2.get(shop) == null) {
+                report2.put(shop, outcomes);
+            } else {
+                report2.replace(shop, report2.get(shop) + outcomes);
             }
         }
-
         return report2;
     }
 
     private static Map<Integer, String> getReport(List<String> dataFromFiles) {
         Map<Integer, String> report = new HashMap<>();
-        for (var strings : dataFromFiles) {
-            String[] splitedData = strings.split("\n");
+        for (String strings : dataFromFiles) {
             double profit = 0;
-            for (String dataString : splitedData) {
-                if (dataString.contains(SHOP)) {
-                    String[] currentShop = dataString.split(";");
-                    String incomes = currentShop[1];
+            if (strings.contains(SHOP)) {
+                String[] currentShop = strings.split(";");
+                String incomes = currentShop[1];
                     String outcomes = currentShop[2];
                     String date = currentShop[3];
                     String[] dateArray = date.split("/");
@@ -96,26 +87,39 @@ public class Report {
                     }
                 }
             }
-        }
         return report;
     }
 
-    private static List<String> getData() {
-        File[] files = new File("resource/").listFiles();
-        List<String> dataFromFiles = new ArrayList<>();
-
-        for (File file : files) {
-            if (file.getName().endsWith("2012.txt")) {
-                String data = null;
-                try {
-                    data = Files.readString(Path.of(file.getPath()));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+    private static List<String> getRawDataList(List<String> list) throws IOException {
+        List<String> rawData = new ArrayList<>();
+        for (String file : list) {
+            if (file.endsWith("2012.txt")) {
+                file = Files.readString(Path.of(file));
+                if (file.contains("магазин;доход;расход;дата")) {
+                    String cleanString = file.replaceAll("магазин;доход;расход;дата", "");
+                    if (!cleanString.isEmpty()) {
+                        Collections.addAll(rawData, cleanString.split("\n"));
+                        rawData.removeAll(Arrays.asList("", null)); // нашел в List пустую строку на выходе
+                    }
 
                 }
-                dataFromFiles.add(data);
             }
         }
-        return dataFromFiles;
+        return rawData;
+    }
+
+    private static List<String> getFileNames()  {
+        File[] files = new File("resource/").listFiles();
+        List<String> filesPathList = new ArrayList<>();
+        String fileName;
+        if (files != null) {
+            for (File filePath : files) {
+                if (filePath.toString().endsWith("2012.txt")){
+                    fileName = filePath.toString();
+                    filesPathList.add(fileName);
+                }
+            }
+        }
+        return filesPathList;
     }
 }
