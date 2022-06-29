@@ -4,22 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class BrandChanel {
-    ArrayList<Shop> shops = new ArrayList<>();
+    Shop[] shopArray;
 
-    public BrandChanel(Shop... shops) {
-        for (Shop shop : shops) {
-            Collections.addAll(this.shops, shops);
-        }
-
+    public BrandChanel(Shop[] shopArray) {
+        this.shopArray = shopArray;
     }
 
-
-
-    public ArrayList<Shop> getShops() {
-        return shops;
+    public Shop[] getShopArray() {
+        return shopArray;
     }
 
-    public void setShops(ArrayList<Shop> shops) {
-        this.shops = shops;
+    public void setShopArray(Shop[] shopArray) {
+        this.shopArray = shopArray;
     }
 }

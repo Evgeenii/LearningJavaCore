@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Shop {
-    ArrayList<Employee> employees = new ArrayList<>();
+    Employee employee;
 
-    public Shop(Employee... employees) {
-        for (Employee employee : employees) {
-            Collections.addAll(this.employees, employees);
-        }
+
+    public Shop(Employee employee) {
+        this.employee = employee;
     }
 
-    public ArrayList<Employee> getEmployees() {
-        return employees;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployees(ArrayList<Employee> employees) {
-        this.employees = employees;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }
