@@ -62,31 +62,31 @@ public class Report {
             if (strings.contains(SHOP)) {
                 String[] currentShop = strings.split(";");
                 String incomes = currentShop[1];
-                    String outcomes = currentShop[2];
-                    String date = currentShop[3];
-                    String[] dateArray = date.split("/");
-                    int month = Integer.parseInt(dateArray[1]);
-                    int year = Integer.parseInt(dateArray[2]);
-                    profit += Double.parseDouble(incomes) - Double.parseDouble(outcomes);
-                    StringBuilder profitPerMonth = new StringBuilder();
-                    if (month < 10) {
-                        profitPerMonth.append("0")
-                                .append(month)
-                                .append(".")
-                                .append(year)
-                                .append(": ")
-                                .append(df.format(profit));
-                        report.put(month, profitPerMonth.toString());
-                    } else {
-                        profitPerMonth.append(month)
-                                .append(".")
-                                .append(year)
-                                .append(": ")
-                                .append(df.format(profit));
-                        report.put(month, profitPerMonth.toString());
-                    }
+                String outcomes = currentShop[2];
+                String date = currentShop[3];
+                String[] dateArray = date.split("/");
+                int month = Integer.parseInt(dateArray[1]);
+                int year = Integer.parseInt(dateArray[2]);
+                profit += Double.parseDouble(incomes) - Double.parseDouble(outcomes);
+                StringBuilder profitPerMonth = new StringBuilder();
+                if (month < 10) {
+                    profitPerMonth.append("0")
+                            .append(month)
+                            .append(".")
+                            .append(year)
+                            .append(": ")
+                            .append(df.format(profit));
+                    report.put(month, profitPerMonth.toString());
+                } else {
+                    profitPerMonth.append(month)
+                            .append(".")
+                            .append(year)
+                            .append(": ")
+                            .append(df.format(profit));
+                    report.put(month, profitPerMonth.toString());
                 }
             }
+        }
         return report;
     }
 
@@ -94,7 +94,7 @@ public class Report {
         List<String> rawData = new ArrayList<>();
         for (String file : list) {
             if (file.endsWith("2012.txt")) {
-                file = Files.readString(Path.of(file));
+                file = Files.readString(Path.of(file)).replaceAll("\r", "");
                 if (file.contains("магазин;доход;расход;дата")) {
                     String cleanString = file.replaceAll("магазин;доход;расход;дата", "");
                     if (!cleanString.isEmpty()) {

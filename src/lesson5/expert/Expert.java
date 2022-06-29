@@ -31,17 +31,9 @@ import java.io.IOException;
 public class Expert {
 
     public static void main(String[] args) throws IOException {
-
-        // Задача №1
-        // Необходимо составить отчет об итоговой прибыли за каждый месяц по магазину pyterochka
-        // Формат ожидаемого результат:
-        // Прибыль по магазину pyterochka по месяцам
-        // 01.2012: 20000.00
-        // 02.2012: -100332.00
-        // и тд
+        // Задача №1 и Задача №2
 
         Report.doReport();
-
 
     }
 }
