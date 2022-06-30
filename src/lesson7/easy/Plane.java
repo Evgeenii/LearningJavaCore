@@ -1,18 +1,9 @@
 package lesson7.easy;
 
 public class Plane implements Flyable {
-    private int countPassengers;
+    private final int countPassengers;
 
     public Plane(int countPassengers) {
-        this.countPassengers = countPassengers;
-    }
-
-    public int getCountPassengers() {
-        return countPassengers;
-    }
-
-    public void setCountPassengers(int countPassengers) {
-
         this.countPassengers = countPassengers;
     }
 

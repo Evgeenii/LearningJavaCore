@@ -39,7 +39,7 @@ public class Easy {
         for (Flyable flyable : flyables)
             try {
                 flyable.fly();
-            } catch (FlyException | DuckException flyException) {
+            } catch (FlyException flyException) {
                 System.out.println(flyException.getMessage());
             }
     }
