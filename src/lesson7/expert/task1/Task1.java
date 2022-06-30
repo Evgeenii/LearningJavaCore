@@ -1,4 +1,4 @@
-package lesson7.expert.Task1;
+package lesson7.expert.task1;
 
 public class Task1 {
     public static void main(String[] args) {
