@@ -13,20 +13,4 @@ public class FlyException extends Exception {
         super(message);
         this.countPassengers = countPassengers;
     }
-
-    public int getCountPassengers() {
-        return countPassengers;
-    }
-
-    public void setCountPassengers(int countPassengers) {
-        this.countPassengers = countPassengers;
-    }
-
-    public boolean isInjured() {
-        return isInjured;
-    }
-
-    public void setInjured(boolean injured) {
-        isInjured = injured;
-    }
 }
