@@ -1,4 +1,4 @@
-package lesson7.expert;
+package lesson7.expert.Task1;
 
 public class Human {
     private int age;
