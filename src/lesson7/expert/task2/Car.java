@@ -1,4 +1,4 @@
-package lesson7.expert.task3;
+package lesson7.expert.task2;
 
 public class Car implements CarService{
     private final int price;
